@@ -1,0 +1,50 @@
+" Öncelikle yapacapınız ilemler için gerekli
+  paketleri import edelim
+"
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+import os 
+import math
+import statistics
+import numpy as numpy
+import scipy.stats
+
+# veri setini yükle
+# load dataset
+os.chdir(r"C:\Users\duygu.keten\Desktop\M&E_Dosya\PDM11")
+df = pd.read_spss("df_spss.sav")    
+
+# we can see all columns and rows with pd.options
+pd.options.display.max_columns=None 
+pd.options.display.max_rows=None 
+
+# examine dataset
+df.head()
+
+# You can create sub dataset
+sub_data = df[["variable_1", "variable_2", "variable_3","variable_4",
+               "variable_5","variable_6","variable_7","variable_8","variable_9","variable_10","variable_name"]]
+sub_data.head()
+
+# Create two dateset to use in your regression analysis
+y= sub_data["variable_1"]
+x= sub_data[["variable_2", "variable_3", "variable_4", "variable_5"]]
+
+# convert matrix dependent and independent variables( y and x, respectively)
+np.array([y], dtype=np.float32)
+np.array([x], dtype=np.float32)
+
+#
+model = sm.OLS(y, x)
+results = model.fit()
+results.params
+model = sm.OLS(y, x).fit()
+print(model.summary())
+
+# model r squared
+model.rsquared
+
+# residual plotting
+plt.scatter(residual,y)
